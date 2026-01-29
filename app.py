@@ -1,9 +1,20 @@
+import streamlit as st
+
+# 1. Configuración de la página
+st.set_page_config(page_title="Rebajas 3º ESO", page_icon="🛍️")
+
+# Título y descripción
+st.title("🏷 Calculadora de Rebajas")
+st.markdown("Introduce el precio original y el descuento para saber el precio final.")
+st.write("---")
+
+# 2. Entrada de datos (Barra lateral)
 st.sidebar.header("Datos del producto")
 
 precio_original = st.sidebar.number_input(
     "Precio original (€)",
     min_value=0.0,
-    max_value=1000.0,
+    max_value=1000000.0,
     value=50.0,
     step=0.5
 )
@@ -11,13 +22,13 @@ precio_original = st.sidebar.number_input(
 descuento = st.sidebar.slider(
     "Descuento (%)",
     min_value=0,
-    max_value=90,
+    max_value=99,
     value=20
 )
 
 # 3. Botón de cálculo y lógica
-if st.button("Calcular rebaja"):
-    
+if st.button("Calcular ahora"):
+   
     # Cálculos
     ahorro = precio_original * descuento / 100
     precio_final = precio_original - ahorro
@@ -32,14 +43,14 @@ if st.button("Calcular rebaja"):
         st.metric("Ahorras (€)", f"{ahorro:.2f}")
 
         if descuento == 0:
-            st.info(" ningun descuento aplicado")
+            st.info("ℹ️ No hay descuento aplicado")
         elif descuento < 20:
-            st.warning(" poco descuento")
+            st.warning("🟡 no hay mucha diferencia")
         elif descuento < 50:
-            st.success(" ¡Excelente descuento!")
+            st.success("✅ ¡Buen descuento!")
             st.balloons()
         else:
-            st.success(" ¡Ofertón increíble!")
+            st.success("🔥 ¡Compralo ya!")
 
     # Extra: fórmula matemática
     st.write("---")
@@ -47,6 +58,8 @@ if st.button("Calcular rebaja"):
     st.latex(r'''
     Precio\ Final = Precio\ Original - \frac{Precio\ Original \cdot Descuento}{100}
     ''')
+
+
 
 
 
